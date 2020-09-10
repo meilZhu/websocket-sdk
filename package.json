@@ -1,8 +1,8 @@
 {
-  "name": "websocket-sdk",
-  "version": "0.0.2",
-  "description": "webstart-sdk 的 websocket请求 请求协议的封装",
-  "main": "index.js",
+  "name": "zmy-websocket-sdk",
+  "version": "0.0.1",
+  "description": "websocket-sdk 请求协议的封装",
+  "main": "dist/sdk/websocket-sdk.min.js",
   "files": [
     "README.md",
     "dist"
