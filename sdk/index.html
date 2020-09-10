@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        header {
+            color: #de1a1a;
+        }
+
+        #controll {
+            float: left;
+            width: 250px;
+        }
+        .contentDiv {
+            margin-left: 250px;
+        }
+        button {
+            width: 200px;
+            height: 48px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        #cmd,#url {
+            width: 80%;
+            height: 30px;
+            font-size: 14px;
+        }
+        #param {
+            width: 80%;
+            height: 100px;
+        }
+        #output {
+            border: 1px solid #666;
+            height: 500px;
+            overflow: auto;
+            margin-left: 250px;
+            font-size: 12px;
+            padding: 10px;
+        }
+        #fielname {
+            height: 30px;
+            margin-bottom: 5px;
+            width: 200px;
+            outline: none;
+            font-size: 14px;
+        }
+        .statusBar {
+            height: 50px;
+        }
+        .footBar {
+            margin-top: 10px;
+            margin-left: 250px;
+        }
+        #clientStatus {
+            padding: 5px 10px;
+        }
+        #clientStatus.OFF {
+            background-color: grey;
+            color:white;
+        }
+        #clientStatus.ON {
+            background-color: green;
+            color:white;
+        }
+        #clientStatus.INITIAL {
+            background-color: yellow;
+        }
+    </style>
+    <script src='../dist/sdk/websocket-sdk.min.js'></script>
+</head>
+<body>
+    <div id="controll">
+        <button onclick="init()">Init</button>
+        <button onclick="execute()">Execute Cmd</button>
+        <br/>
+        <button onclick="disconnect()">Disconnect</button>
+        <br/>
+        <label for="forceExit">强制退出</label>
+        <input type="checkbox" id="forceExit"/>
+        <br/>
+        <button onclick="exit()">exit</button>
+        <br/>
+    </div>
+    <div class="statusBar">
+        <span>客户端版本：，客户端状态：</span><span id="clientStatus" class="OFF">OFF</span>
+    </div>
+    <div class="contentDiv">
+        URL:<br/><input id="url" value="ws://localhost:36666/ws/"/><br/>
+        CMD:<br/><input id="cmd" value="comService.init"/><br/>
+        PARAM:<br/><textarea id="param">
+    {
+        "port": 3,
+        "baudRate": 2400,
+        "numDataBits": 7,
+        "numStopBits": 1,
+        "parity": 2
+    }
+    </textarea><br/>
+        OUTPUT:(<span id="count">0</span>)(<span id="speed">0</span>/s)<br/>
+    </div>
+    <div id="output">
+    
+    </div>
+    
+    <div class="footBar">
+        <button onclick="clearOutput()">Clear</button>
+    </div>
+    <script type="text/javascript">
+        function logBack(status, logType) {
+            var $el = $('#output');
+            $el.append('<p>[' + logType + ']:(' + status.status + ')' + (status.message || '') + '</p>');
+            if (status.data != null) {
+                $el.append('<p>[数据]:' + JSON.stringify(status.data) + '</p>');
+            }
+        }
+
+
+        function eventHandeler(event) {
+            console.log(event)
+            if (event.type === 'log') {
+                logBack(event, 'LOG');
+            } else if (event.type === 'clientStatus') {
+                logBack(event, 'STATUS');
+                $('#clientStatus').text(event.status).attr('class', event.status);
+            } else if (event.type === 'result') {
+                logBack(event, 'RESULT');
+            } else if (event.type === 'push') {
+                logBack(event, 'PUSH');
+            }
+        }
+
+        function init() {
+            WebSocketSdk.init(eventHandeler, {
+                autoStart: false,
+                jnlpUrl: 'ws://localhost:36666/ws/',
+                port: [36666],
+                heartBeatCheckTimeout: 1000,
+                defaultCmd: 'statusService.query',
+                defaultParam: {}
+            });
+
+        }
+
+        function execute() {
+            var cmdId = WebSocketSdk.exec(document.getElementById("cmd").value, JSON.stringify(document.getElementById("param").value), function (res) {
+                // logBack('同步返回值' + JSON.stringify(res));
+            });
+        }
+
+        function disconnect() {
+            WebSocketSdk.disconnect();
+        }
+
+        function exit() {
+            var force = $('#forceExit').prop('checked');
+            WebSocketSdk.exit();
+        }
+
+        
+        function clearOutput() {
+            var $el = $('#output');
+            $el.text('');
+            msgCount = 0;
+            countTime = new Date().getTime();
+            $("#count").text(0);
+            $("#speed").text(0);
+        }
+
+
+
+    </script>
+</body>
+</html>
