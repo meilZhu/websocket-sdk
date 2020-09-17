@@ -33,7 +33,8 @@ module.exports = {
     "eol-last": ["error", "never"],
     "class-methods-use-this": "off",
     "space-before-function-paren": ["error", "never"],
-    "no-use-before-define": ["error", { "functions": false, "classes": false }]
+    "no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "no-unneeded-ternary": 0
   },
   "globals": {
     "Promise": true,
