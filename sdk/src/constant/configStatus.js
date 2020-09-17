@@ -1,5 +1,5 @@
 /*
- * @file:
+ * @file: 基本配置信息
  * @Date: 2020-09-07 15:50:53
  * @author: manyao.zhu
  */
@@ -13,18 +13,8 @@ export const CONFIG_KEY_AUTO_START = 'autoStart';
  * Jnlp URL
  * @type {string}
  */
-export const CONFIG_KEY_JNLP_URL = 'jnlpUrl';
+export const CONFIG_KEY_AGENT_ADMIN_URL = 'agentAdminUrl';
 
-/**
- * Max Url Length
- * @type {string}
- */
-// export const CONFIG_KEY_MAX_URL_LENGTH = 'maxUrlLength';
-/**
- * 心跳检测频率
- * @type {string}
- */
-// export const CONFIG_KEY_HEART_BEAT_CHECK_RATE = 'heartBeatCheckRate';
 /**
  * 心跳检测超时 时间
  * @type {string}
@@ -37,18 +27,6 @@ export const CONFIG_KEY_HEART_BEAT_CHECK_TIMEOUT = 'heartBeatCheckTimeout';
 export const CONFIG_KEY_PORT = 'port';
 
 /**
- * 分组发送大小
- * @type {string}
- */
-// export const CONFIG_KEY_GROUP_SEND_SIZE = 'groupSendSize';
-
-/**
- * 分组发送延迟
- * @type {string}
- */
-// export const CONFIG_KEY_GROUP_SEND_DELAY = 'groupSendDelay';
-
-/**
  * 初始化调用的cmd
  * @type { string }
  */
@@ -59,3 +37,23 @@ export const CONFIG_KEY_DEFAULT_CMD = 'defaultCmd';
  * @type { string }
  */
 export const CONFIG_KEY_DEFAULT_PARAM = 'defaultParam';
+
+/**
+ * 心跳检测次数限制
+ */
+export const CONFIG_KEY_HEART_BEAT_MAX_TIMES = 'heartBeatMaxTimes';
+
+/**
+ * 最新版本
+ */
+export const CONFIG_KEY_APP_VERSION = 'appVersion';
+
+/**
+ * 新版本的下载地址
+ */
+export const CONFIG_KEY_APP_VERSION_URL = 'appVersionUrl';
+
+/**
+ * 获取应用版本
+ */
+export const CONFIG_KEY_APP_VERSION_CMD = 'appVersionCmd';

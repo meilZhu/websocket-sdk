@@ -17,7 +17,7 @@ let websocket = getWebSocket();
 //  停止检查
 function stopFetch() {
     if (websocket) {
-        websocket.onclose = () => {};
+        websocket.close = () => {};
     }
 }
 

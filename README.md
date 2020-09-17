@@ -1,4 +1,4 @@
-# websocket-sdk
+# @zmy/websocket-sdk
 
 web js插件以及demo， 通过定义一套通信协议及机制，实现web端和本地程序之间的 websocket协议的通信
 
@@ -9,7 +9,7 @@ web js插件以及demo， 通过定义一套通信协议及机制，实现web端
 Download js lib from npmjs
 
 ```
-npm i websocket-sdk
+npm i @zmy/websocket-sdk
 ```
 
 add js to html
@@ -24,13 +24,13 @@ add js to html
 install
 
 ```
-npm i websocket-sdk --save-dev
+npm i @zmy/websocket-sdk --save-dev
 ```
 
 Import
 
 ```
-import * as WebSocketSdk from 'websocket-sdk';
+import * as WebSocketSdk from '@zmy/websocket-sdk';
 ```
 
 ## 协议规范
@@ -54,7 +54,7 @@ WebSocketSdk.init(eventHandler, config);
     - [ ] log：全局日志
     - [ ] clientStatus：本地程序状态变化
     - [ ] result：执行全局结果
-    <!--- [ ] push：客户端主动推送-->
+    - [ ] check：检测结果
 - event.message 消息
 - event.data 数据
 - event.status 状态码
@@ -68,6 +68,8 @@ function eventHandler(event) {
       // event.status:(OFF,ON,INITIAL)
     } else if (event.type === 'result') {
       // 执行全局结果
+    } else if (event.type === 'check') {
+      // 检测结果执行
     }
 }
 ```
@@ -80,24 +82,32 @@ function eventHandler(event) {
 {
   // 是否自动启动（针对JNLP方式启动的客户端）,当需要通过Web启动JAVA程序时，需要将autoStart配置为true,并指定jnlpUrl的地址
   autoStart: true, // Optional
-  jnlpUrl: 'http://127.0.0.1:8081/webclient.jnlp', // Optional
+  agentAdminUrl: 'pcp://36666/', // Optional
   // health接口超时时间，默认1000毫秒
   heartBeatCheckTimeout: 1000, // Optional since V0.3.0
   port: [36666, 36667, 36668], // Default port Optional since V0.3.0
   // 启动后默认调用的一次数据接口（cmd指令）
-  defalutCmd: 'statusService.query',
+  defalutCmd: 'statusService.register',
   // 启动后默认调用一次数据的参数（params）
-  defaultParam: {}
+  defaultParam: {"clientType":"C"},
+  // 最大心跳检测次数
+  heartBeatMaxTimes: 100,
+  // 客户端版本
+  appVersion: '1.2.2',
+  // 下载客户端最新版本的地址
+  appVersionUrl: '',
+  // 检测客户端当前版本的cmd
+  appVersionCmd: 'appService.version'
 }
 ```
 
 #### 发送命令
 
 ```
-var cmdId = WebSocketSdk.exec('cmd001', {
+var cmdId = WebSocketSdk.exec({cmd: 'cmd001', bizData: {
   param1: '123',
   param2: '456'
-}, function (res) {
+}, clientTo: {}}, function (res) {
   log('同步返回值' + JSON.stringify(res));
 });
 if (cmdId !== null) {
@@ -106,6 +116,14 @@ if (cmdId !== null) {
   log('执行命令发送失败');
 }
 ```
+
+#### 下载最新客户端版本
+```
+/**
+ *下载最新版本的客户端
+ */
+ webSocketSdk.download();
+ ```
 
 #### 退出程序
 ```
@@ -125,6 +143,9 @@ WebSocketSdk.disconnect();
 ```
 
 ## CHANGE LOG
+
+##### v0.0.1
+创建@zmy/websocket-sdk
 
 
 

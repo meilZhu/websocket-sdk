@@ -10,7 +10,7 @@ import * as uuid from 'uuid';
 import { EVENT_TYPE_CLIENT_STATUS_CHANGE, STATUS_CHANGE } from '../constant/event';
 
 var clientStatus;
-var commands = [];
+var commands;
 
 export const getClientStatus = () => {
     return clientStatus || CLIENT_STATUS_OFF;
@@ -18,36 +18,33 @@ export const getClientStatus = () => {
 
 export const setClientStatus = (status) => {
     if (status !== clientStatus) {
+        clientStatus = status;
         emitter.emit(STATUS_CHANGE, {
             type: EVENT_TYPE_CLIENT_STATUS_CHANGE,
             status
         });
     }
-    clientStatus = status;
 };
 
 export const clearCommands = () => {
     commands = [];
 };
 
-export const addCommand = (cmd, param, callback) => {
+export const addCommand = (cmd, param, clientTo) => {
     let uid = uuid();
-    commands.push({
+    commands = {
         cmd,
         param,
         uuid: uid,
-        callback
-    });
+        clientTo
+    };
     return uid;
 };
 
 export const getCommand = () => {
-    return commands.length > 0 ? commands[0] : null;
+    return commands ? commands : null;
 };
 
-export const popCommand = (cmdObj) => {
-    if (commands.length > 0 && cmdObj === commands[0]) {
-        return commands.pop();
-    }
-    return null;
+export const popCommand = () => {
+    commands = null;
 };

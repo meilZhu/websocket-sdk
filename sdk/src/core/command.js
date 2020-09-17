@@ -5,11 +5,10 @@
  */
 
 import emitter from '../core/dispatch';
-import { addCommand, getClientStatus, getCommand, popCommand } from '../status/status';
+import { addCommand, getClientStatus, getCommand } from '../status/status';
 import { CLIENT_STATUS_OFF, CLIENT_STATUS_ON } from '../constant/clientStatus';
 import { EVENT_TYPE_LOG, EVENT_TYPE_RESULT, STATUS_CHANGE } from '../constant/event';
 import { getWebSocket } from './socket';
-// import { createTaskMessage } from '../interface/task';
 
 let websocket = null;
 
@@ -21,34 +20,16 @@ export const sendCommands = () => {
     if (cmdObj != null) {
         let params = {};
         params.cmd = cmdObj.cmd;
+
         if (cmdObj.param != null) {
             params.bizData = JSON.stringify(cmdObj.param);
         }
 
+        if (cmdObj.clientTo != null) {
+            params.clientTo = JSON.stringify(cmdObj.clientTo);
+        }
         websocket = getWebSocket();
-
         websocket.socket.send(JSON.stringify(params));
-
-        websocket.socket.onmessage = (res) => {
-            emitter.emit(STATUS_CHANGE, {
-                type: EVENT_TYPE_RESULT,
-                status: 'SUCCESS',
-                message: '发送成功',
-                data: JSON.parse(res.data)
-            });
-            if (cmdObj.callback != null) {
-                cmdObj.callback(res.data);
-            }
-            popCommand(cmdObj);
-        };
-
-        websocket.socket.onerror = (error) => {
-            emitter.emit(STATUS_CHANGE, {
-                type: EVENT_TYPE_RESULT,
-                status: 'ERROR',
-                message: error
-            });
-        };
     }
 };
 
@@ -56,9 +37,9 @@ export const sendCommands = () => {
  * 发送指令
  * @param cmd 指令
  * @param param 参数
- * @param callback 回调
+ * @param clientTo 浏览器
  */
-export const sendCommand = (cmd, param, callback) => {
+export const sendCommand = (cmd, param, clientTo) => {
     var cmdId = null;
     emitter.emit(STATUS_CHANGE, {
         type: EVENT_TYPE_LOG,
@@ -67,7 +48,7 @@ export const sendCommand = (cmd, param, callback) => {
     });
     let stat = getClientStatus();
     if (stat !== CLIENT_STATUS_OFF) {
-        cmdId = addCommand(cmd, param, callback);
+        cmdId = addCommand(cmd, param, clientTo);
     }
     if (stat === CLIENT_STATUS_ON) {
         sendCommands();

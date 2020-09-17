@@ -119,10 +119,13 @@
 
 
         function eventHandeler(event) {
-            console.log(event)
+            console.log(event);
             if (event.type === 'log') {
                 logBack(event, 'LOG');
             } else if (event.type === 'clientStatus') {
+                if (event.status === 'ON') {
+                    execute();
+                }
                 logBack(event, 'STATUS');
                 $('#clientStatus').text(event.status).attr('class', event.status);
             } else if (event.type === 'result') {
@@ -134,24 +137,28 @@
 
         function init() {
             WebSocketSdk.init(eventHandeler, {
-                autoStart: false,
-                jnlpUrl: 'ws://localhost:36666/ws/',
-                port: [36666],
+                autoStart: true,
+                agentAdminUrl: 'pcp://36666/',
+                port: [36666, 36667, 36668],
                 heartBeatCheckTimeout: 1000,
-                defaultCmd: 'statusService.query',
-                defaultParam: {}
+                heartBeatMaxTimes: 10,
+                defaultCmd: 'statusService.register',
+                defaultParam: { clientType: 'C' },
+                appVersion: '0.0.1',
+                appVersionUrl: 'http://pcp.dev.ithinkdt.com/client/pcpClient.jnlp',
+                appVersionCmd: 'appService.version'
             });
 
         }
 
+
         function execute() {
-            var cmdId = WebSocketSdk.exec(document.getElementById("cmd").value, JSON.stringify(document.getElementById("param").value), function (res) {
-                // logBack('同步返回值' + JSON.stringify(res));
-            });
+            var cmdId = WebSocketSdk.exec(document.getElementById("cmd").value, JSON.stringify(document.getElementById("param").value));
         }
 
         function disconnect() {
-            WebSocketSdk.disconnect();
+            // WebSocketSdk.disconnect();
+            WebSocketSdk.download();
         }
 
         function exit() {
@@ -168,9 +175,6 @@
             $("#count").text(0);
             $("#speed").text(0);
         }
-
-
-
     </script>
 </body>
 </html>

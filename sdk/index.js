@@ -9,6 +9,7 @@ import { STATUS_CHANGE } from './src/constant/event';
 import { disconnect as disconnectTask, exit as quitTask } from './src/interface/exit';
 import { setInitConfig } from './src/config/index';
 import { checkClient, execCommand } from './src/interface/client';
+import { downloadNewVersion } from './src/interface/version';
 
 /**
  * 初始化
@@ -29,10 +30,10 @@ export function init(status, config) {
  * 发送指令
  * @param cmd 指令
  * @param param 参数
- * @param callback 回调
+ * @param clientTo 浏览器
  */
-export function exec(cmd, param, callback) {
-    return execCommand(cmd, param, callback);
+export function exec(cmd, param, clientTo) {
+    return execCommand(cmd, param, clientTo);
 }
 
 /**
@@ -48,4 +49,11 @@ export function disconnect() {
  */
 export function exit() {
     quitTask();
+}
+
+/**
+ * 下载新版本
+ */
+export function download() {
+    downloadNewVersion();
 }
