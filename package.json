@@ -1,6 +1,6 @@
 {
-  "name": "zmy-websocket-sdk",
-  "version": "0.0.1",
+  "name": "@zmy/websocket-sdk",
+  "version": "0.0.2",
   "description": "websocket-sdk 请求协议的封装",
   "main": "dist/sdk/websocket-sdk.min.js",
   "files": [
@@ -14,8 +14,6 @@
     "build": "cross-env NODE_ENV=production  webpack --bail --progress --color --env production",
     "serve:dist": "npm run serve --dist",
     "serve": "cross-env NODE_ENV=development node bin/serve",
-    "mock": "cross-env NODE_ENV=development node bin/serve_mock",
-    "jnlp": "cross-env NODE_ENV=development node bin/serve_jnlp",
     "start": "npm run serve",
     "webdriver": "webdriver-manager update",
     "e2e": "npm run protractor -- --production-backend --suit jenkens",
@@ -29,7 +27,6 @@
   "author": "manyao.zhu",
   "license": "ISC",
   "devDependencies": {
-    "axios": "^0.19.2",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
