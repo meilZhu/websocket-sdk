@@ -2,7 +2,7 @@
   "name": "@zmy/websocket-sdk",
   "version": "0.0.3",
   "description": "websocket请求协议的封装",
-  "main": "index.js",
+  "main": "dist/sdk/websocket-sdk.min.js",
   "files": [
     "README.md",
     "dist"
