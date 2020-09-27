@@ -1,4 +1,4 @@
-# @zmy/websocket-sdk
+# @styleofpicasso/websocket-sdk
 
 web js插件以及demo， 通过定义一套通信协议及机制，实现web端和本地程序之间的 websocket协议的通信
 
