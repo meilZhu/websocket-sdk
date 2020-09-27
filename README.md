@@ -9,7 +9,7 @@ web js插件以及demo， 通过定义一套通信协议及机制，实现web端
 Download js lib from npmjs
 
 ```
-npm i @zmy/websocket-sdk
+npm i @styleofpicasso/websocket-sdk
 ```
 
 add js to html
@@ -24,13 +24,13 @@ add js to html
 install
 
 ```
-npm i @zmy/websocket-sdk --save-dev
+npm i @styleofpicasso/websocket-sdk --save-dev
 ```
 
 Import
 
 ```
-import * as WebSocketSdk from '@zmy/websocket-sdk';
+import * as WebSocketSdk from '@styleofpicasso/websocket-sdk';
 ```
 
 ## 协议规范
@@ -154,7 +154,7 @@ WebSocketSdk.disconnect();
 添加 websocketUrl配置项 和 autoCheckAppVersion配置项， 支持一般项目中自定义webscoket的url， 和一般接口的数据处理， 以及对心跳检测是的优化
 
 ##### v0.0.1
-创建@zmy/websocket-sdk
+创建@styleofpicasso/websocket-sdk
 
 
 

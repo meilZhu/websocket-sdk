@@ -1,6 +1,6 @@
 {
   "name": "@styleofpicasso/websocket-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "websocket请求协议的封装",
   "main": "dist/sdk/websocket-sdk.min.js",
   "files": [
