@@ -1,6 +1,6 @@
 {
-  "name": "@zmy/websocket-sdk",
-  "version": "0.0.3",
+  "name": "@styleofpicasso/websocket-sdk",
+  "version": "0.0.1",
   "description": "websocket请求协议的封装",
   "main": "dist/sdk/websocket-sdk.min.js",
   "files": [
@@ -26,7 +26,7 @@
     "eslint": "eslint --fix  ./protractor ./webpack ./sdk",
     "publish2npm": "npm run build && npm publish --registry=https://registry.npmjs.org/"
   },
-  "author": "manyao.zhu",
+  "author": "styleofpicasso",
   "license": "ISC",
   "devDependencies": {
     "axios": "^0.19.2",
