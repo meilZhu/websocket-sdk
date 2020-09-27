@@ -11,9 +11,11 @@ import emitter from '../core/dispatch';
 
 // 获取版本
 function getVersion() {
-    const cmd = getInitConfig(CONFIG_KEY_APP_VERSION_CMD) || 'appService.version';
-    const param = {};
-    sendCommand(cmd, param);
+    const params = {
+        cmd: getInitConfig(CONFIG_KEY_APP_VERSION_CMD),
+        bizData: JSON.stringify({})
+    };
+    sendCommand(params);
 }
 
 // 获取加载version地址
@@ -21,7 +23,7 @@ function getDownVersionUrl() {
     emitter.emit(STATUS_CHANGE, {
         type: EVENT_TYPE_LOG,
         status: 'FETCH_NEW_VERSION_ADDRESS',
-        message: '正在获取AGENT_ADMIN新版本地址...'
+        message: '正在获取客户端新版本地址...'
     });
     let newVersionUrl = getInitConfig(CONFIG_KEY_APP_VERSION_URL);
     if (newVersionUrl == null) {
@@ -34,7 +36,7 @@ function getDownVersionUrl() {
         emitter.emit(STATUS_CHANGE, {
             type: EVENT_TYPE_LOG,
             status: 'NEW_VERSION_ADDRESS_LOAD_SUECCESS',
-            message: 'AGENT_ADMIN 新版本接口地址已获取，地址（' + newVersionUrl + ');如果地址不正确，参考用户手册。'
+            message: '客户端新版本接口地址已获取，地址（' + newVersionUrl + ');如果地址不正确，参考用户手册。'
         });
     }
     return newVersionUrl;
@@ -49,7 +51,7 @@ export function checkVersion() {
             emitter.emit(STATUS_CHANGE, {
                 type: EVENT_TYPE_CHECK,
                 status: 'VERSION_INCONSISTENCY',
-                message: '检测到 AGENT_ADMIN 版本不一致，是否选择下载新的版本'
+                message: '检测到客户端版本不一致，是否选择下载新的版本'
             });
         }
     });
@@ -63,7 +65,7 @@ export function downloadNewVersion() {
         emitter.emit(STATUS_CHANGE, {
             type: EVENT_TYPE_LOG,
             status: 'DOWNLOAD_NEW_VERSION',
-            message: '正在下载AGENT_ADMIN 的新版本， 如果没有下载成功， 请参考用户手册配置。'
+            message: '正在下载客户端的新版本， 如果没有下载成功， 请参考用户手册配置。'
         });
     }
 }

@@ -30,13 +30,11 @@ export const clearCommands = () => {
     commands = [];
 };
 
-export const addCommand = (cmd, param, clientTo) => {
+export const addCommand = (params) => {
     let uid = uuid();
     commands = {
-        cmd,
-        param,
         uuid: uid,
-        clientTo
+        ...params
     };
     return uid;
 };

@@ -139,12 +139,15 @@
             WebSocketSdk.init(eventHandeler, {
                 autoStart: true,
                 agentAdminUrl: 'pcp://36666/',
+                // websocketUrl: 'ws://iris.qa.ithinkdt.com/pub/ws/management/gongzuotai301', // 指定websocket的路径
+                heartBeatParam: { cmd: 'heart_beat.check' },
                 port: [36666, 36667, 36668],
                 heartBeatCheckTimeout: 1000,
                 heartBeatMaxTimes: 10,
                 defaultCmd: 'statusService.register',
                 defaultParam: { clientType: 'C' },
-                appVersion: '0.0.1',
+                autoCheckAppVersion: true,
+                appVersion: '1.2.0',
                 appVersionUrl: 'http://pcp.dev.ithinkdt.com/client/pcpClient.jnlp',
                 appVersionCmd: 'appService.version'
             });
@@ -153,7 +156,7 @@
 
 
         function execute() {
-            var cmdId = WebSocketSdk.exec(document.getElementById("cmd").value, JSON.stringify(document.getElementById("param").value));
+            var cmdId = WebSocketSdk.exec({ cmd: document.getElementById("cmd").value, bizData: JSON.stringify(document.getElementById("param").value) });
         }
 
         function disconnect() {

@@ -57,3 +57,18 @@ export const CONFIG_KEY_APP_VERSION_URL = 'appVersionUrl';
  * 获取应用版本
  */
 export const CONFIG_KEY_APP_VERSION_CMD = 'appVersionCmd';
+
+/**
+ * 是否制动检测客户端版本
+ */
+export const CONFIG_KEY_AUTO_CHECK_APP_VERSION = 'autoCheckAppVersion';
+
+/**
+ * 指定的websocketUrl
+ */
+export const CONFIG_KEY_WEBSOCKET_URL = 'websocketUrl';
+
+/**
+ * 心跳检测的参数
+ */
+export const CONFIG_KEY_HEART_BEAT_PARAM = 'heartBeatParam';

@@ -28,12 +28,10 @@ export function init(status, config) {
 
 /**
  * 发送指令
- * @param cmd 指令
- * @param param 参数
- * @param clientTo 浏览器
+ * @param params 参数
  */
-export function exec(cmd, param, clientTo) {
-    return execCommand(cmd, param, clientTo);
+export function exec(params) {
+    return execCommand(params);
 }
 
 /**

@@ -3,6 +3,7 @@
  * @Date: 2020-09-07 15:39:28
  * @author: manyao.zhu
  */
+import { CONFIG_KEY_WEBSOCKET_URL } from '../constant/configStatus';
 let initConfig;
 
 export const getInitConfig = (key) => {
@@ -14,5 +15,8 @@ export const setInitConfig = (config) => {
 };
 
 export const basicURL = (port) => {
-    return `ws://127.0.0.1:${port}/ws/`;
+    if (!getInitConfig(CONFIG_KEY_WEBSOCKET_URL)) {
+        return `ws://127.0.0.1:${port}/ws/`;
+    }
+    return getInitConfig(CONFIG_KEY_WEBSOCKET_URL);
 };

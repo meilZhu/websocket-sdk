@@ -13,7 +13,7 @@ import {
     CHECK_VERSION
 } from '../constant/event';
 import { getClientStatus } from '../status/status';
-import { CONFIG_KEY_AUTO_START } from '../constant/configStatus';
+import { CONFIG_KEY_AUTO_START, CONFIG_KEY_AUTO_CHECK_APP_VERSION } from '../constant/configStatus';
 import { start } from './task';
 import { startWebSocket } from '../core/health';
 import { sendCommand } from '../core/command';
@@ -28,19 +28,22 @@ function startCheck() {
             emitter.emit(STATUS_CHANGE, {
                 type: EVENT_TYPE_LOG,
                 status: 'NONE_CLIENT_STARTED',
-                message: '连接 AgentAdmin 未成功，准备启动（或安装）AgentAdmin...'
+                message: '连接客户端未成功，准备启动（或安装）客户端...'
             });
             start();
         }
     });
 
     emitter.once(CHECK_VERSION, () => {
-        emitter.emit(STATUS_CHANGE, {
-            type: EVENT_TYPE_LOG,
-            status: 'CHECK_VERSION',
-            message: '正在检测 AGENT_ADMIN 版本'
-        });
-        checkVersion();
+        // 是否自动检测客户端版本
+        if (getInitConfig(CONFIG_KEY_AUTO_CHECK_APP_VERSION)) {
+            emitter.emit(STATUS_CHANGE, {
+                type: EVENT_TYPE_LOG,
+                status: 'CHECK_VERSION',
+                message: '正在检测客户端版本'
+            });
+            checkVersion();
+        }
     });
     // 启动websocket
     startWebSocket();
@@ -61,10 +64,8 @@ export function checkClient() {
 
 /**
  * 发送指令
- * @param cmd 指令
- * @param param 参数
- * @param clientTo 浏览器
+ * @param params 参数
  */
-export function execCommand(cmd, param, clientTo) {
-    return sendCommand(cmd, param, clientTo);
+export function execCommand(params) {
+    return sendCommand(params);
 }

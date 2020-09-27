@@ -73,25 +73,30 @@ function eventHandler(event) {
     }
 }
 ```
-<!--else if (event.type === 'push') {-->
-<!--    // 客户端主动推送-->
-<!--}   -->
+
 ##### config 启动配置
 
 ```
 {
-  // 是否自动启动（针对JNLP方式启动的客户端）,当需要通过Web启动JAVA程序时，需要将autoStart配置为true,并指定jnlpUrl的地址
+  // 是否自动启动或下载本地客户端（此项为选择配置项，若不配置或为false,将不会自动下载客户端， 以致agentAdminUrl 配置项失效）
   autoStart: true, // Optional
-  agentAdminUrl: 'pcp://36666/', // Optional
-  // health接口超时时间，默认1000毫秒
-  heartBeatCheckTimeout: 1000, // Optional since V0.3.0
+  // 获取最新客户端版本的地址 （当autoStart为 true时， 此项必须要配置，否则会报错）
+  agentAdminUrl: 'pcp://36666/',
+  // websocket 心跳检测频率时间
+  heartBeatCheckTimeout: 1000,
+  // 心跳检测需要推送的配置参数
+  heartBeatParam: {}, 
+  // 自定义的websocketurl地址  (此项可选择配置项， 没有配置的情况下会走sdk中的本地地址，【本地地址会在port配置项的端口中轮询，知道成功】， 若配置了此项，则port项就会失效)
+  websocketUrl: '',
   port: [36666, 36667, 36668], // Default port Optional since V0.3.0
-  // 启动后默认调用的一次数据接口（cmd指令）
+  // 启动后默认调用的一次数据接口（此项为可选择配置项：不配置活配置为空这样初始化之后不会注册控制台 [此项和defaultParam匹配使用]）
   defalutCmd: 'statusService.register',
-  // 启动后默认调用一次数据的参数（params）
+  // 启动后默认调用一次数据的参数（params 此项为可选择配置项）
   defaultParam: {"clientType":"C"},
-  // 最大心跳检测次数
-  heartBeatMaxTimes: 100,
+  // 链接失败后，连续重连最大次数
+  reconnectMaxTimes: 100,
+  // 是否自动检测客户端版本 (此项为选择配置项； 不配置或为false, 将不会自动检测客户端版本 下面三项配置【appVersion/appVersionUrl/appVersionCmd】将会失效)
+  autoCheckAppVersion: true;
   // 客户端版本
   appVersion: '1.2.2',
   // 下载客户端最新版本的地址
@@ -103,6 +108,7 @@ function eventHandler(event) {
 
 #### 发送命令
 
+这里的参数需要一个对象
 ```
 var cmdId = WebSocketSdk.exec({cmd: 'cmd001', bizData: {
   param1: '123',
@@ -143,6 +149,9 @@ WebSocketSdk.disconnect();
 ```
 
 ## CHANGE LOG
+
+##### V0.0.2
+添加 websocketUrl配置项 和 autoCheckAppVersion配置项， 支持一般项目中自定义webscoket的url， 和一般接口的数据处理， 以及对心跳检测是的优化
 
 ##### v0.0.1
 创建@zmy/websocket-sdk

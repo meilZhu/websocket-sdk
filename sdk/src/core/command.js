@@ -18,37 +18,25 @@ let websocket = null;
 export const sendCommands = () => {
     let cmdObj = getCommand();
     if (cmdObj != null) {
-        let params = {};
-        params.cmd = cmdObj.cmd;
-
-        if (cmdObj.param != null) {
-            params.bizData = JSON.stringify(cmdObj.param);
-        }
-
-        if (cmdObj.clientTo != null) {
-            params.clientTo = JSON.stringify(cmdObj.clientTo);
-        }
         websocket = getWebSocket();
-        websocket.socket.send(JSON.stringify(params));
+        websocket.socket.send(JSON.stringify(cmdObj));
     }
 };
 
 /**
  * 发送指令
- * @param cmd 指令
- * @param param 参数
- * @param clientTo 浏览器
+ * @param params 参数
  */
-export const sendCommand = (cmd, param, clientTo) => {
+export const sendCommand = (params) => {
     var cmdId = null;
     emitter.emit(STATUS_CHANGE, {
         type: EVENT_TYPE_LOG,
         status: 'EXECUTE_COMMAND',
-        message: cmd
+        message: params.cmd
     });
     let stat = getClientStatus();
     if (stat !== CLIENT_STATUS_OFF) {
-        cmdId = addCommand(cmd, param, clientTo);
+        cmdId = addCommand(params);
     }
     if (stat === CLIENT_STATUS_ON) {
         sendCommands();

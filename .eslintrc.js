@@ -25,6 +25,7 @@ module.exports = {
     "newline-per-chained-call": 0,
     "no-param-reassign": [2, { "props": false }],
     "no-new": 0,
+    "no-console": 0,
     "no-plusplus": 0,
     "no-loop-func": 1,
     "linebreak-style": 0,

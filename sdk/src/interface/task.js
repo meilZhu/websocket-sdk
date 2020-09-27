@@ -15,7 +15,7 @@ function fetchAgentAdminAction() {
     emitter.emit(STATUS_CHANGE, {
         type: EVENT_TYPE_LOG,
         status: 'FETCH_AGENT_ADMIN_ADDRESS',
-        message: '正在获取AGENT_ADMIN地址...'
+        message: '正在获取客户端地址...'
     });
     let agentAdminUrl = getInitConfig(CONFIG_KEY_AGENT_ADMIN_URL);
     if (agentAdminUrl == null) {
@@ -28,7 +28,7 @@ function fetchAgentAdminAction() {
         emitter.emit(STATUS_CHANGE, {
             type: EVENT_TYPE_LOG,
             status: 'AGENT_ADMIN_ADDRESS_LOAD_SUECCESS',
-            message: 'AGENT_ADMIN接口地址已获取，地址（' + agentAdminUrl + ');如果地址不正确，参考用户手册。'
+            message: '客户端接口地址已获取，地址（' + agentAdminUrl + ');如果地址不正确，参考用户手册。'
         });
     }
     return agentAdminUrl;
@@ -45,7 +45,7 @@ function start() {
         emitter.emit(STATUS_CHANGE, {
             type: EVENT_TYPE_LOG,
             status: 'OPEN_AGENT_AGMIN',
-            message: '正在启动AGENT_ADMIN， 如果没有启动成功， 请参考用户手册配置自动启动或手动启动。'
+            message: '正在启动客户端， 如果没有启动成功， 请参考用户手册配置自动启动或手动启动。'
         });
     }
 }

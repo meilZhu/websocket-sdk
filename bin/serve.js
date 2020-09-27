@@ -14,7 +14,7 @@ const webpackconfig = require('../webpack/webpack.dev.conf');
 // default host where dev server listens ip address
 const host = args.host || '127.0.0.1';
 // default port where dev server listens for incoming traffic
-const port = args.port || 8686;
+const port = args.port || 8181;
 
 const proxy = {
     intergration: {
