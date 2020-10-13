@@ -7,6 +7,13 @@
     "README.md",
     "dist"
   ],
+  "keywords": [
+    "websocket",
+    "websocket-sdk",
+    "sdk",
+    "异步加载数据",
+    "html5新特性"
+  ],
   "scripts": {
     "clean:test": "rimraf coverage",
     "clean": "npm run clean:test",

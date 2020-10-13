@@ -150,6 +150,9 @@ WebSocketSdk.disconnect();
 
 ## CHANGE LOG
 
+##### v0.0.4
+添加关键字, 将之前打开新页面改成直接下载（当客户端不存在时）； 修改之前当所有端口都不能连接上时的重连时差； 解决IE浏览器不兼容问题
+
 ##### V0.0.2
 添加 websocketUrl配置项 和 autoCheckAppVersion配置项， 支持一般项目中自定义webscoket的url， 和一般接口的数据处理， 以及对心跳检测是的优化
 
